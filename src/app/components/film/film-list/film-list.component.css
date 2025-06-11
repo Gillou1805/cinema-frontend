@@ -1,0 +1,23 @@
+/* src/app/components/film/film-list/film-list.component.css */
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  padding: 0 16px 16px;
+}
+.film-card {
+  transition: transform .2s;
+  cursor: default;
+}
+.film-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(0,0,0,.12);
+}
+mat-card-content p {
+  margin: 0;
+}

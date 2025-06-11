@@ -1,0 +1,8 @@
+<nav>
+  <a routerLink="/">Accueil</a>
+  <a *ngIf="isLoggedIn$ | async" routerLink="/admin">Admin</a>
+  <button *ngIf="isLoggedIn$ | async; else loginBtn" (click)="logout()">Logout</button>
+  <ng-template #loginBtn>
+    <a routerLink="/login">Login</a>
+  </ng-template>
+</nav>

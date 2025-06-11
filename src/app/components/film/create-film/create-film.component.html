@@ -1,0 +1,64 @@
+<!-- src/app/components/film/create-film/create-film.component.html -->
+
+<div class="form-container">
+  <h2>Ajouter un film</h2>
+
+  <form #filmForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Titre</mat-label>
+      <input
+        matInput
+        name="titre"
+        required
+        [(ngModel)]="film.titre"
+        #titre="ngModel"
+      />
+      <mat-error *ngIf="titre.invalid && titre.touched">
+        Le titre est requis.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Durée (min)</mat-label>
+      <input
+        matInput
+        type="number"
+        name="duree"
+        required
+        [(ngModel)]="film.duree"
+        #duree="ngModel"
+      />
+      <mat-error *ngIf="duree.invalid && duree.touched">
+        La durée est requise.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        name="description"
+        [(ngModel)]="film.description"
+      ></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Image (URL)</mat-label>
+      <input
+        matInput
+        name="image"
+        [(ngModel)]="film.image"
+        placeholder="https://exemple.com/affiche.jpg"
+      />
+    </mat-form-field>
+
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="filmForm.invalid"
+    >
+      Créer le film
+    </button>
+  </form>
+</div>

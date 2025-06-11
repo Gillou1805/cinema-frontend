@@ -1,0 +1,123 @@
+<!-- src/app/components/film/film-management/film-management.component.html -->
+
+<div class="container">
+  <h2>Gestion des films</h2>
+
+  <!-- Bouton pour ouvrir le formulaire d'ajout -->
+  <button class="btn btn-success mb-3" (click)="initCreate()">Ajouter un film</button>
+
+  <!-- Formulaire de création / modification -->
+  <div *ngIf="isEditing" class="card mb-4 p-3">
+    <h4>{{ editingFilm?.idFilm ? 'Modifier un film' : 'Nouveau film' }}</h4>
+    
+    <!-- Aperçu de l'affiche si URL renseignée -->
+    <div *ngIf="editingFilm.image" class="mb-3 text-center">
+      <img [src]="editingFilm.image"
+           alt="Affiche {{ editingFilm.titre }}"
+           style="max-height: 200px; object-fit: cover; width: auto;">
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #filmForm="ngForm">
+      <!-- Titre -->
+      <div class="form-group mb-2">
+        <label for="titre">Titre</label>
+        <input
+          type="text"
+          id="titre"
+          name="titre"
+          class="form-control"
+          required
+          [(ngModel)]="editingFilm.titre"
+          #titreInput="ngModel">
+        <div class="text-danger" *ngIf="titreInput.invalid && (titreInput.dirty || titreInput.touched)">
+          Le titre est requis.
+        </div>
+      </div>
+
+      <!-- Durée -->
+      <div class="form-group mb-2">
+        <label for="duree">Durée (minutes)</label>
+        <input
+          type="number"
+          id="duree"
+          name="duree"
+          class="form-control"
+          required
+          min="1"
+          [(ngModel)]="editingFilm.duree"
+          #dureeInput="ngModel">
+        <div class="text-danger" *ngIf="dureeInput.invalid && (dureeInput.dirty || dureeInput.touched)">
+          Veuillez saisir une durée valide (au moins 1 minute).
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group mb-2">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          class="form-control"
+          rows="3"
+          [(ngModel)]="editingFilm.description">
+        </textarea>
+      </div>
+
+      <!-- Image (URL) -->
+      <div class="form-group mb-3">
+        <label for="image">Image (URL)</label>
+        <input
+          type="text"
+          id="image"
+          name="image"
+          class="form-control"
+          placeholder="https://exemple.com/affiche.jpg"
+          [(ngModel)]="editingFilm.image"
+          #imageInput="ngModel">
+        <div class="text-danger" *ngIf="imageInput.invalid && (imageInput.dirty || imageInput.touched)">
+          L’URL de l’image est requise.
+        </div>
+      </div>
+
+      <!-- Boutons Enregistrer / Annuler -->
+      <button type="submit"
+              class="btn btn-primary me-2"
+              [disabled]="filmForm.invalid">
+        {{ editingFilm.idFilm ? 'Enregistrer les modifications' : 'Créer le film' }}
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Annuler</button>
+    </form>
+  </div>
+
+  <!-- Tableau des films existants -->
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Affiche</th>
+        <th>Titre</th>
+        <th>Durée</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let film of films">
+        <!-- Colonne Affiche -->
+        <td style="width: 100px;">
+          <img *ngIf="film.image"
+               [src]="film.image"
+               alt="{{ film.titre }}"
+               style="height: 60px; object-fit: cover;">
+        </td>
+
+        <td>{{ film.titre }}</td>
+        <td>{{ film.duree }} min</td>
+        <td>{{ film.description }}</td>
+        <td>
+          <button class="btn btn-sm btn-warning me-2" (click)="initEdit(film)">Éditer</button>
+          <button class="btn btn-sm btn-danger" (click)="onDelete(film.idFilm!)">Supprimer</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

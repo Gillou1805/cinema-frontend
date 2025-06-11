@@ -1,0 +1,30 @@
+<!-- src/app/components/film/film-list/film-list.component.html -->
+<div class="toolbar">
+  <button mat-raised-button color="primary" routerLink="/admin/films/create">
+    Ajouter un film
+  </button>
+</div>
+
+<div class="grid">
+  <mat-card *ngFor="let f of films" class="film-card">
+    <mat-card-header>
+      <mat-card-title> {{ f.titre }} </mat-card-title>
+      <mat-card-subtitle> Durée : {{ f.duree }} min </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <p>{{ f.description }}</p>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-button color="accent" [routerLink]="['/admin/films', f.idFilm, 'edit']">
+        Éditer
+      </button>
+      <button mat-button color="warn" (click)="onDelete(f.idFilm!)">
+        Supprimer
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
